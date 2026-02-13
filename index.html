@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeyad Mohamed Samir | Software Engineer</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0a192f;
+            --card-bg: rgba(17, 34, 64, 0.7);
+            --text-primary: #ccd6f6;
+            --text-secondary: #8892b0;
+            --accent: #64ffda;
+            --white: #e6f1ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        body::before {
+            content: "";
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(29, 78, 216, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle, rgba(100, 255, 218, 0.1) 0%, transparent 40%);
+            background-size: 50% 50%, 60% 60%;
+            background-position: 0 0, 100% 100%;
+            animation: moveBackground 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-50px, -50px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* --- UTILS --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        h1, h2, h3 {
+            color: var(--white);
+            font-weight: 700;
+        }
+
+        .highlight {
+            color: var(--accent);
+        }
+
+        /* Scroll Reveal Class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 50px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h4 {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent);
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 {
+            font-size: 4em;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .hero-text h2 {
+            font-size: 2.5em; /* Adjusted for balance */
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+
+        .hero-text p {
+            font-size: 1.15em;
+            color: var(--text-secondary);
+            max-width: 550px; /* Made slightly wider for new text */
+            margin-bottom: 30px;
+        }
+
+        /* --- SOCIAL LINKS (NEW ADDITION) --- */
+        .social-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .social-icon {
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* Glowing Button */
+        .btn-glow {
+            display: inline-block;
+            padding: 15px 35px;
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 4px;
+            font-family: 'Space Mono', monospace;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-glow:hover {
+            background: rgba(100, 255, 218, 0.1);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Profile Image */
+        .profile-wrapper {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            flex-shrink: 0;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .profile-wrapper:hover .profile-img {
+            transform: translate(-5px, -5px);
+        }
+
+        .profile-wrapper:hover::after {
+            transform: translate(5px, 5px);
+        }
+
+        /* --- HEADINGS --- */
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            white-space: nowrap;
+        }
+
+        .section-header h2 {
+            font-size: 2em;
+            margin-right: 20px;
+        }
+
+        .section-header h2::before {
+            content: "0" counter(section) ".";
+            counter-increment: section;
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+
+        .section-header::after {
+            content: "";
+            display: block;
+            width: 300px;
+            height: 1px;
+            background-color: #233554;
+            opacity: 0.5;
+        }
+
+        body { counter-reset: section; }
+
+        section {
+            padding: 100px 0;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* --- SKILLS (UPDATED DESIGN) --- */
+        .skills-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            border-color: rgba(100, 255, 218, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85em;
+            background: rgba(10, 25, 47, 0.5);
+            color: var(--text-secondary);
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: 1px solid #233554;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag i {
+            color: var(--accent);
+        }
+
+        .skill-tag:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        /* --- PROJECTS --- */
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #233554;
+        }
+
+        .project-card:hover {
+            transform: translateY(-7px);
+            border-color: var(--accent);
+        }
+
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .folder-icon {
+            color: var(--accent);
+            font-size: 40px;
+        }
+
+        .project-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+
+        .tech-list {
+            display: flex;
+            gap: 15px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+
+        /* --- CONTACT FORM --- */
+        .contact-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(17, 34, 64, 0.5);
+            border: 1px solid #233554;
+            color: var(--white);
+            border-radius: 4px;
+            font-family: inherit;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .submit-btn {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 15px 40px;
+            font-size: 1em;
+            font-family: 'Space Mono', monospace;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-2px);
+        }
+
+        #response {
+            margin-top: 20px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        .error-message { color: #ff6b6b !important; }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8em;
+        }
+        
+        /* Footer social icons */
+        .footer-socials {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .footer-socials a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+        
+        .footer-socials a:hover {
+            color: var(--accent);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 100px;
+            }
+            .hero-text h1 { font-size: 3em; }
+            .section-header::after { width: 50px; }
+            .profile-wrapper { width: 250px; height: 250px; }
+            .hero-text p { margin: 0 auto 30px auto; }
+            .social-links { justify-content: center; }
+        }
+    </style>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+
+    <header class="container">
+        <div class="hero-content">
+            <div class="hero-text reveal">
+
+
+
+                <h4>Software Engineering Undergraduate @ MIU</h4>
+
+                <h4>Hi, my name is</h4>
+                
+                <h1>Zeyad Mohamed Samir Attia.</h1>
+                
+                
+                <p>
+                    I am a 3rd-year Software Engineer Development student constructing the bridge between <strong>low-level algorithmic efficiency (C++, Java)</strong> and <strong>modern web architecture (MERN, LAMP)</strong>.
+                    <br><br>
+                    My focus goes beyond just writing code. I am actively adopting <strong>DevOps methodologies and clouds</strong> to master the full software lifecycle—from system design and rigorous testing to automated deployment.
+                    <br><br>
+                    Currently leveraging tools like <strong>Docker, Python</strong> to build resilient, production-grade software.
+                </p>
+                
+                <div class="social-links">
+                    <a href="https://github.com/Zeyadsmir200618" target="_blank" class="social-icon" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/zeyad-mohamed-samir-attia-a38547362" target="_blank" class="social-icon" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="#contact" class="btn-glow">Get In Touch</a>
+                </div>
+            </div>
+            <div class="profile-wrapper reveal">
+                <img src="profile.jpg" alt="Zeyad Mohamed Samir Attia" class="profile-img">
+            </div>
+        </div>
+    </header>
+
+    <section id="skills" class="container reveal">
+        <div class="section-header">
+            <h2>Technical Proficiency</h2>
+        </div>
+        
+        <div class="skills-wrapper">
+            
+            <div class="skill-category">
+                <h3><i class="fas fa-code"></i> Core Languages</h3>
+                <div class="skill-list">
+                    <div class="skill-tag"><i class="fab fa-java"></i> Java (OOP)</div>
+                    <div class="skill-tag"><i class="fas fa-c"></i> C++ / C</div>
+                    <div class="skill-tag"><i class="fab fa-python"></i> Python</div>
+                    <div class="skill-tag"><i class="fab fa-js-square"></i> JavaScript (ES6+)</div>
+                    <div class="skill-tag"><i class="fab fa-php"></i> PHP</div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-layer-group"></i> Web Architecture</h3>
+                <div class="skill-list">
+                    <div class="skill-tag"><i class="fab fa-react"></i> React.js</div>
+                    <div class="skill-tag"><i class="fab fa-node-js"></i> Node.js</div>
+                    <div class="skill-tag"><i class="fab fa-html5"></i> HTML5 & CSS3</div>
+                    <div class="skill-tag"><i class="fas fa-mobile-alt"></i> Responsive UI</div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-database"></i> Data & Storage</h3>
+                <div class="skill-list">
+                    <div class="skill-tag"><i class="fas fa-leaf"></i> MongoDB</div>
+                    <div class="skill-tag"><i class="fas fa-database"></i> MySQL</div>
+                    <div class="skill-tag"><i class="fas fa-chart-bar"></i> PowerBI</div>
+                    <div class="skill-tag"><i class="fas fa-project-diagram"></i> Data Structures</div>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3><i class="fas fa-tools"></i> Tools & DevOps</h3>
+                <div class="skill-list">
+                    <div class="skill-tag"><i class="fab fa-git-alt"></i> Git & GitHub</div>
+                    <div class="skill-tag"><i class="fab fa-docker"></i> Docker (Basics)</div>
+                    <div class="skill-tag"><i class="fab fa-figma"></i> Figma (UI/UX)</div>
+                    <div class="skill-tag"><i class="fas fa-terminal"></i> Linux Cmd Line</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="projects" class="container reveal">
+        <div class="section-header">
+            <h2>Some Things I've Built</h2>
+        </div>
+
+        <div class="project-card">
+            <div class="project-top">
+                <i class="far fa-folder folder-icon"></i>
+                <a href="#" style="color: var(--white);"><i class="fas fa-external-link-alt"></i></a>
+            </div>
+            <h3>Campus Eats</h3>
+            <p>A specialized food delivery platform designed for university campuses to streamline student dining. Features real-time order tracking and cafe management dashboards.</p>
+            <div class="tech-list">
+                <span>Node.js</span>
+                <span>MongoDB</span>
+                <span>MERN</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-top">
+                <i class="far fa-folder folder-icon"></i>
+                <a href="#" style="color: var(--white);"><i class="fas fa-external-link-alt"></i></a>
+            </div>
+            <h3>Blink to Click</h3>
+            <p>An accessibility web tool allowing users with motor impairments to control mouse clicks using eye blinks via webcam processing.</p>
+            <div class="tech-list">
+                <span>Python</span>
+                <span>OpenCV</span>
+                <span>JavaScript</span>
+                <span>HCI</span>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-top">
+                <i class="far fa-folder folder-icon"></i>
+                <a href="#" style="color: var(--white);"><i class="fas fa-external-link-alt"></i></a>
+            </div>
+            <h3>TripLink</h3>
+            <p>A comprehensive reservation management system for scheduling and resource allocation. Handles conflicts, user roles, and reporting.</p>
+            <div class="tech-list">
+                <span>PHP</span>
+                <span>MySQL</span>
+                <span>Apache</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="container reveal">
+        <div class="contact-wrapper">
+            <p class="highlight">04. What's Next?</p>
+            <h2 style="font-size: 3em; margin-bottom: 20px;">Get In Touch</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 40px;">
+                Whether you have a question or just want to say hi, my inbox is always open. I'll try my best to get back to you!
+            </p>
+
+            <form id="contactForm">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Say Hello</button>
+            </form>
+            <p id="response"></p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-socials">
+            <a href="https://github.com/Zeyadsmir200618" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/zeyad-mohamed-samir-attia-a38547362" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p>Designed & Built by Zeyad Samir © 2026</p>
+    </footer>
+
+    <script>
+        // --- 1. SCROLL ANIMATION ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger once on load
+
+        // --- 2. EMAILJS SETUP ---
+        const PUBLIC_KEY = "rLuhZ2ZTWAKUDi_TH";
+        const SERVICE_ID = "service_8v2teva";
+        const TEMPLATE_ID = "template_3n5aqnm";
+
+        (function(){
+            emailjs.init(PUBLIC_KEY);
+        })();
+
+        document.getElementById('contactForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            
+            const responseText = document.getElementById('response');
+            responseText.innerText = "Sending via Quantum Tunnel..."; 
+            responseText.style.color = "#64ffda";
+            responseText.classList.remove("error-message");
+
+            emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+                .then(() => {
+                    responseText.innerText = "Message transmitted successfully!";
+                    this.reset();
+                }, (error) => {
+                    console.log('FAILED...', error);
+                    responseText.innerText = "Transmission Error: " + JSON.stringify(error);
+                    responseText.classList.add("error-message");
+                });
+        });
+    </script>
+
+</body>
+</html>
